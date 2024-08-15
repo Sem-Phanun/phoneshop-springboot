@@ -66,9 +66,36 @@ public class BrandServiceImpl implements BrandService {
         brandRepository.delete(brand);
         return brand;
     }
+// Filtering
+//    @Override
+//    public List<Brand> getBrands(Map<String, String> params) {
+//        BrandFilter brandFilter = new BrandFilter();
+//        if (params.containsKey("id")) {
+//            String id = params.get("id");
+//            brandFilter.setId(Integer.parseInt(params.get("id")));
+//        }
+//        if (params.containsKey("name")) {
+//            String name = params.get("name");
+//            brandFilter.setName(name);
+//        }
+//
+//        int pageLimit = 1;
+//        if (params.containsKey(PageUtil.PAGE_LIME)) {
+//            pageLimit = Integer.parseInt(params.get("pageLimit"));
+//        }
+//
+//        int pageNumber = 1;
+//        if (params.containsKey(PageUtil.PAGE_NUMBER)) {
+//            pageNumber = Integer.parseInt(params.get("pageNumber"));
+//        }
+//
+//        BrandSpecification brandSpecification = new BrandSpecification(brandFilter);
+//        Pageable pageable = PageUtil.getPageable(pageNumber, pageLimit);
+//        return brandRepository.findAll(brandSpecification);
+//    }
 
     @Override
-    public List<Brand> getBrands(Map<String, String> params) {
+    public Page<Brand> getBrands(Map<String, String> params) {
         BrandFilter brandFilter = new BrandFilter();
         if (params.containsKey("id")) {
             String id = params.get("id");
@@ -79,19 +106,23 @@ public class BrandServiceImpl implements BrandService {
             brandFilter.setName(name);
         }
 
-        int pageLimit = 1;
+        //Todo add to function
+        int pageSize = PageUtil.DEFAULT_PAGE_LIMIT;
         if (params.containsKey(PageUtil.PAGE_LIME)) {
-            pageLimit = Integer.parseInt(params.get("pageLimit"));
+            pageSize = Integer.parseInt(params.get(PageUtil.PAGE_LIME));
         }
 
-        int pageNumber = 1;
+        int pageNumber = PageUtil.DEFAULT_PAGE_NUMBER;
         if (params.containsKey(PageUtil.PAGE_NUMBER)) {
-            pageNumber = Integer.parseInt(params.get("pageNumber"));
+            pageNumber = Integer.parseInt(params.get(PageUtil.PAGE_NUMBER));
         }
 
         BrandSpecification brandSpecification = new BrandSpecification(brandFilter);
-        Pageable pageable = PageRequest.of(pageNumber, pageLimit);
-        return brandRepository.findAll(brandSpecification);
+        Pageable pageable = PageUtil.getPageable(pageNumber, pageSize);
+        Page<Brand> page;
+        page = brandRepository.findAll(brandSpecification, pageable);
+
+        return page;
     }
 
 

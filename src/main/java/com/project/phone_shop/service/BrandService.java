@@ -11,7 +11,7 @@ public interface BrandService {
     Brand getBrandById(Integer id);
     Brand update(Integer id,Brand brandUpdate);
     Brand delete(Integer id);
-    List<Brand> getBrands(Map<String, String> params);
+    Page<Brand> getBrands(Map<String, String> params);
     //Page<Brand> getAllBrands(Map<String, String> params);
     //List<Brand> getAllBrands();
     // List<Brand> getBrandsByName(String name);

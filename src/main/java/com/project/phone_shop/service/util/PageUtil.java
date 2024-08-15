@@ -9,7 +9,7 @@ public interface PageUtil {
     String PAGE_LIME = "_limit";
     String PAGE_NUMBER = "_page";
 
-    default Pageable getPageable(int pageNumber, int pageSize) {
+    static Pageable getPageable(int pageNumber, int pageSize) {
         if (pageNumber < DEFAULT_PAGE_NUMBER) {
             pageNumber = DEFAULT_PAGE_NUMBER;
         }
