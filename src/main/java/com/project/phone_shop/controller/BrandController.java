@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("brands")
@@ -28,11 +30,15 @@ public class BrandController {
         Brand brand = brandService.getBrandById(brandId);
         return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brand));
     }
-    @GetMapping()
-    public ResponseEntity<?> getAllBrands() {
-        List<Brand> brands = brandService.getAllBrands();
-        return ResponseEntity.ok(brands);
+    @GetMapping
+    public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params) {
+        List<BrandDTO> list = brandService.getBrands(params)
+                .stream()
+                .map(BrandMapperImpl.INSTANCE::toBrandDTO)
+                .toList();
+        return ResponseEntity.ok(list);
     }
+
 
     @PutMapping("{id}")
     public ResponseEntity<?> updateBrand(@PathVariable("id") Integer brandId, @RequestBody BrandDTO brandDTO) {
