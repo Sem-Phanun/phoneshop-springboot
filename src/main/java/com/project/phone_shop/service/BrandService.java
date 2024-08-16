@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 import java.util.Map;
 
+
 public interface BrandService {
     Brand save(Brand brand);
     Brand getBrandById(Integer id);

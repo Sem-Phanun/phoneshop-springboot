@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Integer>, JpaSpecificationExecutor<Brand> {
-   //List<Brand> findByNameIsLikeIgnoreCase(String name);
+
 }

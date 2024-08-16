@@ -11,7 +11,6 @@ public class PaginationDTO {
     private int totalPages;
     private long totalElements;
     private long numberOfElements;
-
     private boolean first;
     private boolean last;
     private boolean empty;

@@ -7,6 +7,7 @@ import com.project.phone_shop.service.BrandService;
 import com.project.phone_shop.service.util.PageUtil;
 import com.project.phone_shop.specification.BrandFilter;
 import com.project.phone_shop.specification.BrandSpecification;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,10 +18,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class BrandServiceImpl implements BrandService {
 
     @Autowired
-    private BrandRepository brandRepository;
+    private final BrandRepository brandRepository;
 
 
     @Override
@@ -37,7 +39,9 @@ public class BrandServiceImpl implements BrandService {
 ////        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Brand not found");
 //        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found"));
         return brandRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Brand not found",id));
+                .orElseThrow(
+                        () ->
+                                new ResourceNotFoundException("Brand not found",id));
                 //.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
                 //.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
     }

@@ -6,6 +6,7 @@ import com.project.phone_shop.entities.Brand;
 import com.project.phone_shop.mapper.BrandMapperImpl;
 import com.project.phone_shop.service.BrandService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +54,7 @@ public class BrandController {
     @GetMapping
     public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params) {
         Page<Brand> brands = brandService.getBrands(params);
-//        PageDTO pageDTO = new PageDTO(page);
+
         /*List<BrandDTO> list = brandService.getBrands(params)
               .stream()
               .map(BrandMapperImpl.INSTANCE::toBrandDTO)
