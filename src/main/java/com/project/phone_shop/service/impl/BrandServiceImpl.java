@@ -8,13 +8,12 @@ import com.project.phone_shop.service.util.PageUtil;
 import com.project.phone_shop.specification.BrandFilter;
 import com.project.phone_shop.specification.BrandSpecification;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -30,18 +29,19 @@ public class BrandServiceImpl implements BrandService {
         return brandRepository.save(brand);
     }
 
+
     @Override
-    public Brand getBrandById(Integer id) {
+    public Brand getById(Long id) {
 //        Optional<Brand> brandOptional = brandRepository.findById(id);
 //        if (brandOptional.isPresent()) {
 //            return brandOptional.get();
 //        }
 ////        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Brand not found");
 //        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found"));
-        return brandRepository.findById(id)
+        return brandRepository.findById(Math.toIntExact(id))
                 .orElseThrow(
                         () ->
-                                new ResourceNotFoundException("Brand not found",id));
+                                new ResourceNotFoundException("Brand not found", Math.toIntExact(id)));
                 //.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
                 //.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
     }
@@ -57,19 +57,21 @@ public class BrandServiceImpl implements BrandService {
 //    }
 
     @Override
-    public Brand update(Integer id, Brand brandUpdate) {
-        Brand brand = getBrandById(id);
+    public Brand update(Long id, Brand brandUpdate) {
+        Brand brand = getById(getById(id).getId());
         brand.setName(brandUpdate.getName()); //TODO Improve update
         return brandRepository.save(brand);
     }
 
 
-    @Override
-    public Brand delete(Integer id) {
-        Brand brand = getBrandById(id);
-        brandRepository.delete(brand);
-        return brand;
-    }
+    //@Override
+//    public Brand removeById(Long id) {
+//        Brand brand = getById(getById(id).getId());
+//        brandRepository.delete(brand);
+//        return brand;
+//    }
+
+
 // Filtering
 //    @Override
 //    public List<Brand> getBrands(Map<String, String> params) {

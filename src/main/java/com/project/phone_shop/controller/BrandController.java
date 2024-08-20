@@ -31,30 +31,29 @@ public class BrandController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getOneBrand(@PathVariable("id") Integer brandId) {
-        Brand brand = brandService.getBrandById(brandId);
+    public ResponseEntity<?> getOneBrand(@PathVariable("id") Long brandId) {
+        Brand brand = brandService.getById(brandId);
         return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brand));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<?> updateBrand(@PathVariable("id") Integer brandId, @RequestBody BrandDTO brandDTO) {
+    public ResponseEntity<?> updateBrand(@PathVariable("id") Long brandId, @RequestBody BrandDTO brandDTO) {
 //        Brand brand = Mapper.toBrand(brandDTO);
         Brand brand = BrandMapperImpl.INSTANCE.toBrand(brandDTO);
         Brand brandUpdated = brandService.update(brandId, brand);
         return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brandUpdated));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteBrand(@PathVariable("id") Integer brandId) {
-        BrandMapperImpl.INSTANCE.toBrand(new BrandDTO());
-        Brand brandDelete = brandService.delete(brandId);
-        return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brandDelete));
-    }
+//    @DeleteMapping("{id}")
+//    public ResponseEntity<?> deleteBrand(@PathVariable("id") Long brandId) {
+//        BrandMapperImpl.INSTANCE.toBrand(new BrandDTO());
+//        Brand brandDelete = brandService.removeById(brandId);
+//        return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brandDelete));
+//    }
 
     @GetMapping
     public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params) {
         Page<Brand> brands = brandService.getBrands(params);
-
         /*List<BrandDTO> list = brandService.getBrands(params)
               .stream()
               .map(BrandMapperImpl.INSTANCE::toBrandDTO)
