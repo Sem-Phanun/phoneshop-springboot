@@ -12,7 +12,7 @@ public class Brand {
     @Column(name = "brand_id")
     private Long id;
     @Column(name = "brand_name")
-    private String name;
+    private String brandName;
 
 
 }

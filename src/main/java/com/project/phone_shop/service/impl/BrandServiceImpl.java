@@ -31,19 +31,19 @@ public class BrandServiceImpl implements BrandService {
 
 
     @Override
-    public Brand getById(Long id) {
+    public Brand getById(Long brandId) {
 //        Optional<Brand> brandOptional = brandRepository.findById(id);
 //        if (brandOptional.isPresent()) {
 //            return brandOptional.get();
 //        }
 ////        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Brand not found");
 //        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found"));
-        return brandRepository.findById(Math.toIntExact(id))
+        return brandRepository.findById(brandId)
                 .orElseThrow(
                         () ->
-                                new ResourceNotFoundException("Brand not found", Math.toIntExact(id)));
-                //.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
-                //.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
+                                new ResourceNotFoundException("Brand not found", brandId));
+        //.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
+        //.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
     }
 
 //    @Override
@@ -57,9 +57,9 @@ public class BrandServiceImpl implements BrandService {
 //    }
 
     @Override
-    public Brand update(Long id, Brand brandUpdate) {
-        Brand brand = getById(getById(id).getId());
-        brand.setName(brandUpdate.getName()); //TODO Improve update
+    public Brand update(Long brandId, Brand brandUpdate) {
+        Brand brand = getById(getById(brandId).getId());
+        brand.setBrandName(brandUpdate.getBrandName()); //TODO Improve update
         return brandRepository.save(brand);
     }
 

@@ -48,7 +48,7 @@ public class BrandServiceTest {
     public void testSave(){
         //Given
         Brand newBrand = new Brand();
-        newBrand.setName("Apple");
+        newBrand.setBrandName("Apple");
         //When
         brandService.save(newBrand);
 
@@ -60,14 +60,14 @@ public class BrandServiceTest {
     public void testGetByIdSuccess(){
         //Given
         Brand newBrand = new Brand();
-        newBrand.setName("Apple");
+        newBrand.setBrandName("Apple");
         newBrand.setId(1L);
         //When
-        when(brandRepository.findById(1)).thenReturn(Optional.of(newBrand));
+        when(brandRepository.findById(1L)).thenReturn(Optional.of(newBrand));
         Brand brandReturn = brandService.getById(1L);
         //Then
         Assertions.assertEquals(1, brandReturn.getId());
-        Assertions.assertEquals("Apple", brandReturn.getName());
+        Assertions.assertEquals("Apple", brandReturn.getBrandName());
 
     }
 
@@ -76,7 +76,7 @@ public class BrandServiceTest {
         //Given
 
         //When
-        when(brandRepository.findById(2)).thenReturn(Optional.empty());
+        when(brandRepository.findById(2L)).thenReturn(Optional.empty());
         Assertions.assertThrows(ResourceNotFoundException.class, () -> brandService.getById(2L));
 
     }

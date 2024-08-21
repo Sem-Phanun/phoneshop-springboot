@@ -1,26 +1,33 @@
 package com.project.phone_shop.controller;
 
 import com.project.phone_shop.dto.BrandDTO;
+import com.project.phone_shop.dto.ModelDTO;
 import com.project.phone_shop.dto.PageDTO;
 import com.project.phone_shop.entities.Brand;
+import com.project.phone_shop.entities.Model;
+import com.project.phone_shop.mapper.BrandMapper;
 import com.project.phone_shop.mapper.BrandMapperImpl;
+import com.project.phone_shop.mapper.ModelEntityMapper;
 import com.project.phone_shop.service.BrandService;
+import com.project.phone_shop.service.ModelService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("brands")
+@RequestMapping(value = "brands")
+@AllArgsConstructor
 public class BrandController {
     private final BrandService brandService;
+    private final ModelService modelService;
+    private final ModelEntityMapper modelEntityMapper;
 
-    public BrandController(BrandService brandService) {
-        this.brandService = brandService;
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createBrand(@RequestBody BrandDTO brandDTO) {
@@ -53,12 +60,19 @@ public class BrandController {
 
     @GetMapping
     public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params) {
-        Page<Brand> brands = brandService.getBrands(params);
-        /*List<BrandDTO> list = brandService.getBrands(params)
-              .stream()
-              .map(BrandMapperImpl.INSTANCE::toBrandDTO)
-                .toList(); */
-        return ResponseEntity.ok(brands);
+//        Page<Brand> brands = brandService.getBrands(params);
+//        PageDTO pageDTO = new PageDTO(brands);
+        List<Brand> list = brandService.getBrands(params)
+                .stream()
+                .toList();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("{id}/models")
+    public ResponseEntity<?> getModelByBrand(@PathVariable("id") Long brandId) {
+        List<Model> brands = modelService.getByBrand(brandId);
+        List<ModelDTO> collect = brands.stream().map(modelEntityMapper::toModelDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(collect);
     }
 
 }

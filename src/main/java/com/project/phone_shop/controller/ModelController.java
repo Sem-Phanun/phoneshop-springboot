@@ -2,26 +2,25 @@ package com.project.phone_shop.controller;
 
 import com.project.phone_shop.dto.ModelDTO;
 import com.project.phone_shop.entities.Model;
-import com.project.phone_shop.mapper.ModelMapper;
+import com.project.phone_shop.mapper.ModelEntityMapper;
 import com.project.phone_shop.service.ModelService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+
 @RestController
-@RequestMapping("/models")
+@RequestMapping("models")
+@AllArgsConstructor
 public class ModelController {
 
     private final ModelService modelService;
+    private final ModelEntityMapper modelEntityMapper;
 
-
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createModel(@RequestBody ModelDTO modelDTO) {
-
-        Model model = modelService.save(modelDTO);
-        return ResponseEntity.ok(model);
+        Model model = modelEntityMapper.toModel(modelDTO);
+        model = modelService.save(model);
+        return ResponseEntity.ok(ModelEntityMapper.INSTANCE.toModelDTO(model));
     }
 }

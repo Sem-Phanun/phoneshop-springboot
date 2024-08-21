@@ -4,7 +4,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 public interface PageUtil {
-    int DEFAULT_PAGE_LIMIT = 2;
+    int DEFAULT_PAGE_LIMIT = 10;
     int DEFAULT_PAGE_NUMBER = 1;
     String PAGE_LIME = "_limit";
     String PAGE_NUMBER = "_page";
