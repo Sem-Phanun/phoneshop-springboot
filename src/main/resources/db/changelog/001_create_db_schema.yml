@@ -1,150 +1,150 @@
-databaseChangeLog:
-  - changeSet:
-      id: 001_create_db_schema
-      author: phanunsem@gmail.com
-      changes:
-        - createTable:
-            tableName: brands
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: brand_id
-                  type: NUMERIC
-              - column:
-                  name: brand_name
-                  type: varchar(50)
-        - createTable:
-            tableName: models
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: model_id
-                  type: NUMERIC
-              - column:
-                  name: model_name
-                  type: varchar(50)
-              - column:
-                  name: brand_id
-                  type: bigint
-                  constraints:
-                    foreignKeyName: fk_models_brands
-                    references: brands(brand_id)
-        - createTable:
-            tableName: colors
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: color_id
-                  type: NUMERIC
-              - column:
-                  name: color_name
-                  type: varchar(50)
-        - createTable:
-            tableName: products
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: product_id
-                  type: NUMERIC
-              - column:
-                  name: product_name
-                  type: varchar(50)
-              - column:
-                  name: available_unit
-                  type: BIGINT
-              - column:
-                  name: sale_price
-                  type: decimal
-              - column:
-                  name: image_path
-                  type: varchar
-              - column:
-                  name: model_id
-                  type: NUMERIC
-              - column:
-                  name: color_id
-                  type: numeric
-              - column:
-                  name: model_id
-                  type: NUMERIC
-                  constraints:
-                    foreignKeyName: fk_product_models
-                    references: models(model_id)
-              - column:
-                  name: color_id
-                  type: NUMERIC
-                  constraints:
-                    foreignKeyName: fk_products_colors
-                    references: colors(colors_id)
-        - createTable:
-            tableName: productImport_histories
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: import_id
-                  type: NUMERIC
-              - column:
-                  name: import_date
-                  type: timestamp
-              - column:
-                  name: import_unit
-                  type: BIGINT
-              - column:
-                  name: price_per_unit
-                  type: decimal
-              - column:
-                  name: product_id
-                  type: NUMBER
-                  constraints:
-                    foreignKeyName: fk_productImport_histories_products
-                    references: products(product_id)
-
-        - createTable:
-            tableName: sales
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: sale_id
-                  type: NUMERIC
-              - column:
-                  name: sold_date
-                  type: timestamp
-        - createTable:
-            tableName: sale_details
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    primaryKey: true
-                  name: sale_detail_id
-                  type: NUMERIC
-              - column:
-                  name: sale_sale_id
-                  type: NUMERIC
-                  constraints:
-                    foreignKeyName: fk_sale_details_sales
-                    references: sales(sale_id)
-              - column:
-                  name: product_id
-                  type: NUMERIC
-                  constraints:
-                    foreignKeyName: fk_sale_details_products
-                    references: products(product_id)
-              - column:
-                  name: amount
-                  type: BIGINT
-              - column:
-                  name: unit
-                  type: BIGINT
+#databaseChangeLog:
+#  - changeSet:
+#      id: 001_create_db_schema
+#      author: phanunsem@gmail.com
+#      changes:
+#        - createTable:
+#            tableName: brands
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: brand_id
+#                  type: NUMERIC
+#              - column:
+#                  name: brand_name
+#                  type: varchar(50)
+#        - createTable:
+#            tableName: models
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: model_id
+#                  type: NUMERIC
+#              - column:
+#                  name: model_name
+#                  type: varchar(50)
+#              - column:
+#                  name: brand_id
+#                  type: bigint
+#                  constraints:
+#                    foreignKeyName: fk_models_brands
+#                    references: brands(brand_id)
+#        - createTable:
+#            tableName: colors
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: color_id
+#                  type: NUMERIC
+#              - column:
+#                  name: color_name
+#                  type: varchar(50)
+#        - createTable:
+#            tableName: products
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: product_id
+#                  type: NUMERIC
+#              - column:
+#                  name: product_name
+#                  type: varchar(50)
+#              - column:
+#                  name: available_unit
+#                  type: BIGINT
+#              - column:
+#                  name: sale_price
+#                  type: decimal
+#              - column:
+#                  name: image_path
+#                  type: varchar
+#              - column:
+#                  name: model_id
+#                  type: NUMERIC
+#              - column:
+#                  name: color_id
+#                  type: numeric
+#              - column:
+#                  name: model_id
+#                  type: NUMERIC
+#                  constraints:
+#                    foreignKeyName: fk_product_models
+#                    references: models(model_id)
+#              - column:
+#                  name: color_id
+#                  type: NUMERIC
+#                  constraints:
+#                    foreignKeyName: fk_products_colors
+#                    references: colors(colors_id)
+#        - createTable:
+#            tableName: productImport_histories
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: import_id
+#                  type: NUMERIC
+#              - column:
+#                  name: import_date
+#                  type: timestamp
+#              - column:
+#                  name: import_unit
+#                  type: BIGINT
+#              - column:
+#                  name: price_per_unit
+#                  type: decimal
+#              - column:
+#                  name: product_id
+#                  type: NUMBER
+#                  constraints:
+#                    foreignKeyName: fk_productImport_histories_products
+#                    references: products(product_id)
+#
+#        - createTable:
+#            tableName: sales
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: sale_id
+#                  type: NUMERIC
+#              - column:
+#                  name: sold_date
+#                  type: timestamp
+#        - createTable:
+#            tableName: sale_details
+#            columns:
+#              - column:
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                  name: sale_detail_id
+#                  type: NUMERIC
+#              - column:
+#                  name: sale_sale_id
+#                  type: NUMERIC
+#                  constraints:
+#                    foreignKeyName: fk_sale_details_sales
+#                    references: sales(sale_id)
+#              - column:
+#                  name: product_id
+#                  type: NUMERIC
+#                  constraints:
+#                    foreignKeyName: fk_sale_details_products
+#                    references: products(product_id)
+#              - column:
+#                  name: amount
+#                  type: BIGINT
+#              - column:
+#                  name: unit
+#                  type: BIGINT

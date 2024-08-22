@@ -7,7 +7,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@Entity(name = "sale_details")
+@Entity
+@Table(name = "sale_details")
 public class SaleDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +23,9 @@ public class SaleDetail {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "amout")
+    @Column(name = "sold_amout")
     private BigDecimal amount;
 
+    @Column(name = "quantity")
     private Integer unit;
 }

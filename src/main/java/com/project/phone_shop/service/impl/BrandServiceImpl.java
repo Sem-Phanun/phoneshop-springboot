@@ -59,7 +59,7 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public Brand update(Long brandId, Brand brandUpdate) {
         Brand brand = getById(getById(brandId).getId());
-        brand.setBrandName(brandUpdate.getBrandName()); //TODO Improve update
+        brand.setName(brandUpdate.getName()); //TODO Improve update
         return brandRepository.save(brand);
     }
 

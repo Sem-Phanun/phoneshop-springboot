@@ -1,15 +1,15 @@
-databaseChangeLog:
-  - changeSet:
-      id: 003_create_color_db
-      author: phanunsem@gmail.com
-      changes:
-        - loadData:
-            tableName: brands
-            columns:
-              - column:
-                  name: brand_id
-                  type: NUMERIC
-              - column:
-                  name: brand_name
-                  type: varchar(50)
-            file: db/data/002_brands.csv
+#databaseChangeLog:
+#  - changeSet:
+#      id: 003_create_color_db
+#      author: phanunsem@gmail.com
+#      changes:
+#        - loadData:
+#            tableName: brands
+#            columns:
+#              - column:
+#                  name: brand_id
+#                  type: NUMERIC
+#              - column:
+#                  name: brand_name
+#                  type: varchar(50)
+#            file: db/data/002_brands.csv

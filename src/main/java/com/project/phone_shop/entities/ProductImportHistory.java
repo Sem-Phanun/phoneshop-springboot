@@ -1,24 +1,27 @@
 package com.project.phone_shop.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Entity(name = "productImport_histories")
+@Entity
+@Table(name = "productImport_histories")
 public class ProductImportHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "import_id")
     private Long importId;
 
-    @Column(name = "import_date")
-    private LocalDateTime importDate;
+    @Column(name = "date_import")
+    private LocalDateTime dateImport;
 
     @Column(name = "import_unit")
-    private Long importUnit;
+    private Integer importUnit;
 
     @Column(name = "price_per_unit")
     private BigDecimal pricePerUnit;
