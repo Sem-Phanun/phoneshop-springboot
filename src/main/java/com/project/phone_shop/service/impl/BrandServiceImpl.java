@@ -1,27 +1,37 @@
 package com.project.phone_shop.service.impl;
 
+import com.project.phone_shop.dto.BrandDTO;
 import com.project.phone_shop.entities.Brand;
+import com.project.phone_shop.exception.ApiException;
 import com.project.phone_shop.exception.ResourceNotFoundException;
 import com.project.phone_shop.repository.BrandRepository;
+import com.project.phone_shop.repository.ModelRepository;
 import com.project.phone_shop.service.BrandService;
 import com.project.phone_shop.service.util.PageUtil;
 import com.project.phone_shop.specification.BrandFilter;
 import com.project.phone_shop.specification.BrandSpecification;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
+import org.mapstruct.Qualifier;
+import org.mapstruct.TargetType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-    @Autowired
+
     private final BrandRepository brandRepository;
+    private final ModelRepository modelRepository;
 
 
     @Override
@@ -32,18 +42,9 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand getById(Long brandId) {
-//        Optional<Brand> brandOptional = brandRepository.findById(id);
-//        if (brandOptional.isPresent()) {
-//            return brandOptional.get();
-//        }
-////        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, "Brand not found");
-//        throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found"));
         return brandRepository.findById(brandId)
                 .orElseThrow(
-                        () ->
-                                new ResourceNotFoundException("Brand not found", brandId));
-        //.orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
-        //.orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("Brand with Id = %d not found", id)));
+                        () -> new ResourceNotFoundException("Brand not found", brandId));
     }
 
 //    @Override
@@ -64,12 +65,16 @@ public class BrandServiceImpl implements BrandService {
     }
 
 
-    //@Override
-//    public Brand removeById(Long id) {
-//        Brand brand = getById(getById(id).getId());
-//        brandRepository.delete(brand);
-//        return brand;
-//    }
+    @Override
+    public void removeById(Long id) {
+        Brand brand = getById(id);
+        brandRepository.findById(brand.getId());
+        if (modelRepository.existsById(brand.getId())) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Brand with id = %d " + id + " already exists can not be removed");
+        }
+//        brandRepository.deleteById(id);
+        brandRepository.delete(brand);
+    }
 
 
 // Filtering

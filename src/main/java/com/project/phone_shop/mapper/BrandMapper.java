@@ -12,4 +12,5 @@ public interface BrandMapper {
     Brand toBrand(BrandDTO brandDTO);
 
     BrandDTO toBrandDTO(Brand entity);
+
 }

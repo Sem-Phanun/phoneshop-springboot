@@ -14,6 +14,7 @@ import com.project.phone_shop.service.SaleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
@@ -44,6 +45,36 @@ public class SaleServiceImpl implements SaleService {
         //Sale Details
 
 
+    }
+
+    @Override
+    public Sale getById(Long saleId) {
+        return saleRepository.findById(saleId).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Sale not found"));
+    }
+
+    @Override
+    public void cancelSale(Long saleId) {
+        //Update sale status
+        Sale sale = getById(saleId);
+        sale.setStatus(false);
+        saleRepository.save(sale);
+
+        //Update stock
+        List<SaleDetail> saleDetails = saleDetailRepository.findBySaleId(saleId);
+        List<Long> list = saleDetails.stream().map(saleDetail -> saleDetail
+                        .getProduct()
+                        .getProductId())
+                .toList();
+        List<Product> products = productRepository.findAllById(list);
+        Map<Long, Product> productMap = products.stream().collect(Collectors.toMap(Product::getProductId, Function.identity()));
+        saleDetails.forEach(saleDetail -> {
+            Product product = productMap.get(saleDetail
+                    .getProduct()
+                    .getProductId());
+            product.setAvailableUnit(product.getAvailableUnit() + saleDetail.getUnit());
+            productRepository.save(product);
+        });
     }
 
     private void saveSale(SaleDTO saleDTO) {

@@ -51,12 +51,13 @@ public class BrandController {
         return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brandUpdated));
     }
 
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<?> deleteBrand(@PathVariable("id") Long brandId) {
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteBrand(@PathVariable("id") Long brandId) {
 //        BrandMapperImpl.INSTANCE.toBrand(new BrandDTO());
-//        Brand brandDelete = brandService.removeById(brandId);
+        brandService.removeById(brandId);
 //        return ResponseEntity.ok(BrandMapperImpl.INSTANCE.toBrandDTO(brandDelete));
-//    }
+        return ResponseEntity.ok("brandId: " + brandId);
+    }
 
     @GetMapping
     public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params) {
