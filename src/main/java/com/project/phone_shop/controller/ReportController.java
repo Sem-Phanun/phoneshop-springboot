@@ -1,6 +1,8 @@
 package com.project.phone_shop.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.phone_shop.dto.ProductReportDTO;
+import com.project.phone_shop.dto.report.ExpenseReportDTO;
 import com.project.phone_shop.projection.ProductSold;
 import com.project.phone_shop.service.ReportService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,19 @@ public class ReportController {
 
     @GetMapping("{startDate}/{endDate}")
     public ResponseEntity<?> productSold(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("startDate") LocalDate startDate, @PathVariable("endDate") LocalDate endDate) {
+        List<ProductReportDTO> productSold = reportService.getProductReport(startDate, endDate);
+        return ResponseEntity.ok(productSold);
+    }
+
+    @GetMapping("v2/{startDate}/{endDate}")
+    public ResponseEntity<?> productSoldV2(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("startDate") LocalDate startDate, @PathVariable("endDate") LocalDate endDate) {
         List<ProductSold> productSold = reportService.getProductSold(startDate, endDate);
         return ResponseEntity.ok(productSold);
+    }
+
+    @GetMapping("expense/{startDate}/{endDate}")
+    public ResponseEntity<?> expenseReport(@DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("startDate") LocalDate startDate, @PathVariable("endDate") LocalDate endDate){
+        List<ExpenseReportDTO> expenseReports = reportService.getExpenseReport(startDate, endDate);
+        return ResponseEntity.ok(expenseReports);
     }
 }

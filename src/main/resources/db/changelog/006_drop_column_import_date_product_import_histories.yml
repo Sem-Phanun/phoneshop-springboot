@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006_drop_column_import_date_product_import_histories
+      author: kai
+      changes:
+        - dropColumn:
+            tableName: product_import_histories
+            columnName: import_date
