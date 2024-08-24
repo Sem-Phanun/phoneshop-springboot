@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005_drop_column_unit_from_sale_details
+      author: kai
+      changes:
+        - dropColumn:
+            columnName: unit
+            tableName: sale_details

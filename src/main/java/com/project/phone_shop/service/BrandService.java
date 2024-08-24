@@ -1,6 +1,5 @@
 package com.project.phone_shop.service;
 
-import com.project.phone_shop.dto.BrandDTO;
 import com.project.phone_shop.entities.Brand;
 import org.springframework.data.domain.Page;
 

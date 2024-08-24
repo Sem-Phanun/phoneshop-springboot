@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003_modify_column_product_import_histories
+      author: kai
+      changes:
+        - modifyDataType:
+            tableName: product_import_histories
+            columnName: import_date
+            newDataType: TIMESTAMP
+        - addDefaultValue:
+            columnName: import_date
+            tableName: product_import_histories
+            defaultValueDate: CURRENT_TIMESTAMP
+
+

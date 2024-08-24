@@ -23,4 +23,8 @@ public class ModelController {
         model = modelService.save(model);
         return ResponseEntity.ok(ModelEntityMapper.INSTANCE.toModelDTO(model));
     }
+
+    public ResponseEntity<?> getModels(@RequestBody ModelDTO modelDTO) {
+        return ResponseEntity.ok().build();
+    }
 }

@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getByModelIdAndColorId(Long modelId, Long colorId) {
-        String text = "Product not found with model id = %s and color id = %d";
+        String text = "Product not found with model id = %d and color id = %d";
         return productRepository.findByModelIdAndColorId(modelId, colorId)
                 .orElseThrow(()-> new ApiException(HttpStatus.BAD_REQUEST,text.formatted(modelId,colorId)));
     }

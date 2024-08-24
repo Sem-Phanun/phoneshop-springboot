@@ -14,6 +14,9 @@ public class ColorServiceImpl implements ColorService {
     private final ColorRepository colorRepository;
     @Override
     public Color create(Color color) {
+        if (color == null) {
+            throw new RuntimeException("Invalid input");
+        }
         return colorRepository.save(color);
     }
 

@@ -1,6 +1,5 @@
 package com.project.phone_shop.service.impl;
 
-import com.project.phone_shop.dto.BrandDTO;
 import com.project.phone_shop.entities.Brand;
 import com.project.phone_shop.exception.ApiException;
 import com.project.phone_shop.exception.ResourceNotFoundException;
@@ -11,18 +10,11 @@ import com.project.phone_shop.service.util.PageUtil;
 import com.project.phone_shop.specification.BrandFilter;
 import com.project.phone_shop.specification.BrandSpecification;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Named;
-import org.mapstruct.Qualifier;
-import org.mapstruct.TargetType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.Map;
 
 @Service
@@ -70,11 +62,11 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = getById(id);
         brandRepository.findById(brand.getId());
         if (modelRepository.existsById(brand.getId())) {
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Brand with id = %d " + id + " already exists can not be removed");
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Brand with id = %d ".formatted(id) + " already has associated models can not be removed");
         }
-//        brandRepository.deleteById(id);
         brandRepository.delete(brand);
     }
+
 
 
 // Filtering

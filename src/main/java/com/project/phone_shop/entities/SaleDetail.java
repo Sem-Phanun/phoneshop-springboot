@@ -16,14 +16,14 @@ public class SaleDetail {
     private Long saleDetailId;
 
     @ManyToOne
-    @JoinColumn(name = "sale_sale_id")
+    @JoinColumn(name = "sale_id")
     private Sale sale;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "sold_amout")
+    @Column(name = "sold_amount")
     private BigDecimal amount;
 
     @Column(name = "quantity")
