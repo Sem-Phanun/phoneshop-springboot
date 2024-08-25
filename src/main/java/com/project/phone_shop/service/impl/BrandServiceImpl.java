@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,10 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public Brand save(Brand brand) {
+        Optional<Brand> saveBrand = brandRepository.findBrandByName(brand.getName());
+        if (saveBrand.isPresent()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST,"Brand Name already exists");
+        }
         return brandRepository.save(brand);
     }
 

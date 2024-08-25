@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007_add_unique_column_brand_name_brands
+      author: kai
+      changes:
+        - addUniqueConstraint:
+            tableName: brands
+            columnNames: brand_name
+            constraintName:  const_name

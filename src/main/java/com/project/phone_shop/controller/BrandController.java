@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class BrandController {
     private final ModelService modelService;
     private final ModelEntityMapper modelEntityMapper;
 
-
+    @PreAuthorize("hasAnyAuthority('brand_write')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> createBrand(@RequestBody BrandDTO brandDTO) {
 //        Brand brand = Mapper.toBrand(brandDTO);
@@ -60,6 +61,7 @@ public class BrandController {
         return ResponseEntity.ok("brandId: " + brandId);
     }
 
+    @PreAuthorize("hasAnyAuthority('brand_read')")
     @GetMapping
     public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params) {
 //        Page<Brand> brands = brandService.getBrands(params);

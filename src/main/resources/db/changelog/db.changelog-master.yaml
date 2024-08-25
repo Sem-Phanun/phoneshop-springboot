@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/005_drop_column_unit_from_sale_details.yml
   - include:
       file: db/changelog/006_drop_column_import_date_product_import_histories.yml
+  - include:
+      file: db/changelog/007_add_unique_column_brand_name_brands.yml
