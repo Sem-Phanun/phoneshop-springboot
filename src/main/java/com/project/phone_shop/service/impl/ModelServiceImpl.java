@@ -2,6 +2,7 @@ package com.project.phone_shop.service.impl;
 
 
 import com.project.phone_shop.entities.Model;
+import com.project.phone_shop.exception.ApiException;
 import com.project.phone_shop.exception.ResourceNotFoundException;
 import com.project.phone_shop.repository.ModelRepository;
 import com.project.phone_shop.service.ModelService;
@@ -9,10 +10,12 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +27,10 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public Model save(Model model) {
+        Optional<Model> modelOptional = modelRepository.findModelByName(model.getName());
+        if (modelOptional.isPresent()) {
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Model " + model.getName() + " already exists");
+        }
         return modelRepository.save(model);
     }
 
